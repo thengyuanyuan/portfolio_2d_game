@@ -6,12 +6,12 @@ k.loadSprite("spritesheet", "./spritesheet.png", {
     sliceX: 39,
     sliceY: 31,
     anims: {
-        "idle-down": 936,
-        "walk-down": { from: 936, to: 939, loop: true, speed: 8 },
-        "idle-side": 975,
-        "walk-side": { from: 975, to: 978, loop: true, speed: 8 },
-        "idle-up": 1014,
-        "walk-up": { from: 1014, to: 1017, loop: true, speed: 8 },
+        "idle-down": 952,
+        "walk-down": { from: 952, to: 955, loop: true, speed: 8 },
+        "idle-side": 991,
+        "walk-side": { from: 991, to: 994, loop: true, speed: 8 },
+        "idle-up": 1030,
+        "walk-up": { from: 1030, to: 1033, loop: true, speed: 8 },
     }
 })
 
@@ -51,7 +51,7 @@ k.scene("main", async () => {
             for (const boundary of layer.objects) {
                 map.add([
                     k.area({
-                        shape: new k.Rect(k.vec2(0), boundary.width, boundary.height)
+                        shape: new k.Rect(k.vec2(0), boundary.width, boundary.height,),
                     }),
                     k.body({ isStatic: true }),
                     k.pos(boundary.x, boundary.y),
@@ -77,6 +77,14 @@ k.scene("main", async () => {
                         (map.pos.y + entity.y) * scaleFactor,
                     );
                     k.add(player);
+
+                    // Initial dialogue after player is added to the scene
+                    player.isInDialogue = true;
+                    displayDialogue(dialogueData["initial-intro"], () => {
+                        player.isInDialogue = false;
+                    });
+
+
                     continue;
                 }
             }
